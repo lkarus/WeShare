@@ -1,0 +1,232 @@
+#logo {
+	height: 50%;
+	width: 50%;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  font-size: 16px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  clear: both;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #d2d2d2;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+  width: auto;
+  /*max-width: 680px;*/
+  padding: 0 15px;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.col-md-4 {
+	text-align: center;
+}
+
+.footer p {
+	font-size: 120%;
+	margin-top: 15px;
+	font-weight: bold;
+}
+
+.footer a {
+	font-size: 100%;
+	text-decoration: none;
+	color: black;
+}
+
+.footer a:hover {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+ 	-webkit-transition: color 1s;
+	transition: color 1s;
+}
+
+.features-row h4 {
+	margin-bottom: 20px;
+  	margin-top: 30px;
+  	font-weight: bold;
+}
+
+.features-row p {
+	margin-bottom: 30px;
+}
+
+#use-without-login {
+	margin: auto;
+	padding-top: 100px;
+	width: 50%;
+}
+
+#use-without-login a {
+	width: 9%;
+}
+
+#youtube-video-link {
+	width: 90%;
+	text-align: center;
+}
+
+
+
+#demo-video {
+	/*border: 1px solid black;*/
+	margin: 30px auto;
+	width: 600px;
+	height: 450px;
+}
+
+.features-row {
+	width: 90%;
+	margin: 20px auto;
+	border: 1px solid black;
+}
+
+.mid-feature {
+	border-left: 3px groove #f5f5f5;
+	border-right: 3px groove #f5f5f5;
+}
+
+video {
+	border: 1px solid black;
+}
+
+/*div {
+	border: 1px solid black;	
+}*/
+
+/*
+Working on right click
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+.container {
+  margin: 0 auto;
+  padding: 0 24px;
+  max-width: 960px;
+}
+*/
+/* primary header */
+
+.primary-header {
+  padding: 24px 0;
+  text-align: center;
+  border-bottom: solid 2px #cfcfcf;
+}
+
+.primary-header__title {
+  color: #393939;
+  font-size: 36px;
+}
+
+.primary-header__title small {
+  font-size: 18px;
+  color: #898989;
+}
+
+/* content */
+
+.content {
+  padding: 48px 0;
+  border-bottom: solid 2px #cfcfcf;
+}
+
+.content__footer {
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* footer */
+
+.primary-footer {
+  padding: 24px 0;
+  color: #898989;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* tasks */
+
+.tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: solid 1px #dfdfdf;
+}
+
+.task:last-child {
+  border-bottom: none;
+}
+
+/* context menu */
+
+.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  padding: 12px 0;
+  width: 240px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px #cfcfcf;
+}
+
+.context-menu--active {
+  display: block;
+}
+
+.context-menu__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu__item {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.context-menu__item:last-child {
+  margin-bottom: 0;
+}
+
+.context-menu__link {
+  display: block;
+  padding: 4px 12px;
+  color: #0066aa;
+  text-decoration: none;
+}
+
+.context-menu__link:hover {
+  color: #fff;
+  background-color: #0066aa;
+}

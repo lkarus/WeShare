@@ -1,0 +1,46 @@
+#camera-sections {
+	/*border: solid red 1px;*/
+}
+
+#camera-sections .section {
+	display: inline-block;
+	/*border: solid red 2px;*/
+	width: 100%;
+	margin: 4px 0;
+}
+
+
+/*#camera-sections .btn{
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+}*/
+
+#camera-sections img {
+	/*border: solid red 1px;*/
+	display: inline-block;
+}
+
+#camera-sections a {
+	margin: 0 10px;
+}
+
+#youtube-section{
+	height: 100%;
+}
+
+#youtube-section div {
+	position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.circle-btn{
+	width: 30px;
+}
+
+#leave-btn {
+	/*border-radius: 30%;*/
+	width: 80%;
+}
+

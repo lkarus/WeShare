@@ -1,0 +1,96 @@
+#camera-sections {
+	/*border: solid red 1px;*/
+}
+
+#camera-sections .section {
+	display: inline-block;
+	/*border: solid red 2px;*/
+	width: 100%;
+	margin: 4px 0;
+}
+
+
+/*#camera-sections .btn{
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+}*/
+
+#camera-sections img {
+	/*border: solid red 1px;*/
+	/*display: inline-block;*/
+
+}
+
+#camera-sections a {
+	margin: 0 10px;
+}
+
+#youtube-section{
+	height: 100%;
+	background-color: black;
+}
+
+#youtube-section div {
+	position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.circle-btn{
+	width: 30px;
+	display: block;
+}
+
+#leave-btn {
+	/*border-radius: 30%;*/
+	width: 85%;
+	text-align: center;
+	margin: 0;
+}
+
+#refresh-btn {
+	backgroundcolor: #df691a; 
+	border-radius: 100%;
+	padding-left: 9px;
+	width: 35px;
+	margin: 0;
+}
+
+#bottom-section .row .col-md-9 {
+	padding: 0;
+}
+
+#bottom-section .row .col-md-3 {
+	padding: 0;
+}
+
+#player {
+	/*position: absolute;*/
+	z-index: 100;
+}
+
+#chat-box {
+	background: transparent;
+    border: 1px solid red;
+    width: 80%;
+	height: 80px;
+
+	/* Positioning */
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 10%;
+    margin-top: 40%;
+
+	z-index: 1000;
+
+    color: red;
+	width: 80%;
+	height: 80px;
+	font-size: 40px;
+	font-weight: lighter;	
+
+	/* make the input box click-through */
+	/*pointer-events: none;*/
+}

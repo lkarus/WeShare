@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="scripts/rmc3.min.js"></script>
+    <script src="https://cdn.webrtc-experiment.com:443/socket.io.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Youtube</title>
+
+    <!-- Add Font linrary -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Add specific Bootsrap theme used -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/youtube_new.css">
+  </head>
+
+  <body data-spy="scroll">
+    <div class="section">
+      <div class="container" style="height:100%; width:100%;">
+        <div class="row" style="height:100%;">
+          <div class="col-md-10" id="youtube-section">
+            <!-- <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/i__1Z5a9Sak" allowfullscreen=""></iframe>
+            </div> -->
+            <!-- <div id="player" class="embed-responsive embed-responsive-16by9" ></div> -->
+            <div id="player"></div>
+            <input type="text" name="something" id="chat-box">
+          </div>
+          <div class="col-md-2" id="camera-sections">
+            <div class="section">
+              <div class="row">
+                <div class="col-md-9" style="padding-right: 0px;">
+                <img src="https://www.wallpaperandphoto.com/wp-content/uploads/2016/01/the_human_affliction-wallpaper-2560x1600.jpg" class="img-responsive" style="height:17%;">
+                </div>
+                <div class="col-md-3" style="padding-top:5%">
+                  <a><img class="circle-btn" src="img/photo-camera.png"></a>
+                  <a><img class="circle-btn" src="img/microphone.png" style="margin-top: 7px;"></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="row">
+                <div class="col-md-9" style="padding-right: 0px;">
+                <img src="https://www.wallpaperandphoto.com/wp-content/uploads/2016/01/the_human_affliction-wallpaper-2560x1600.jpg" class="img-responsive" style="height:17%;">
+                </div>
+                <div class="col-md-3" style="padding-top:5%">
+                  <!-- Add volume bar here -->
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="row">
+                <div class="col-md-9" style="padding-right: 0px;">
+                <img src="https://www.wallpaperandphoto.com/wp-content/uploads/2016/01/the_human_affliction-wallpaper-2560x1600.jpg" class="img-responsive" style="height:17%;">
+                </div>
+                <div class="col-md-3" style="padding-top:5%">
+                  <!-- Add volume bar here -->
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="row">
+                <div class="col-md-9" style="padding-right: 0px;">
+                <img src="https://www.wallpaperandphoto.com/wp-content/uploads/2016/01/the_human_affliction-wallpaper-2560x1600.jpg" class="img-responsive" style="height:17%;">
+                </div>
+                <div class="col-md-3" style="padding-top:5%">
+                  <!-- Add volume bar here -->
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="row">
+                <div class="col-md-9" style="padding-right: 0px;">
+                <img src="https://www.wallpaperandphoto.com/wp-content/uploads/2016/01/the_human_affliction-wallpaper-2560x1600.jpg" class="img-responsive" style="height:17%;">
+                </div>
+                <div class="col-md-3" style="padding-top:5%">
+                  <!-- Add volume bar here -->
+                </div>
+              </div>
+            </div>
+
+            <div class="section" id="bottom-section">
+              <div class="row">
+                <div class="col-md-3">
+                  <a class="btn btn-primary circle-btn" id="refresh-btn" title="Refresh Synchronization" onclick="refreshSync()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+                </div>
+                <div class="col-md-9">
+                  <a class="btn btn-primary" id="leave-btn" href="index.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Leave Room</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add JQuery library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Add bootstrap library -->
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- custom layout for HTML5 audio/video elements -->
+    <script src="scripts/getMediaElement.js"></script>
+
+    <!-- Add Video Sync Functionalities -->
+    <script type="text/javascript" src="js/video-sync.js"></script>
+  </body>
+</html>

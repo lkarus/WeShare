@@ -1,0 +1,54 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+      	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+      	<link rel="STYLESHEET" type="text/css" href="../style/fg_membersite.css" />
+      	<script type='text/javascript' src='../scripts/gen_validatorv31.js'></script>
+      	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      	<style>
+      		legend {
+      			text-align: center;
+      			padding-top: 10px;
+      			height: 50px;
+      		}
+
+      		.short_explanation {
+      			padding-right: 10px;
+      			margin-top: 10px;
+      			text-align: right;
+      		}
+
+      		.container {
+   				width: inherit;
+      		}
+
+      		.container .login-button {
+      			margin: auto;
+      			max-width: 200px;
+      		}
+      	</style>
+</head>
+<body>
+
+<!-- Form Code Start -->
+<div class='col-md-4'></div>
+<div id='fg_membersite' class='col-md-4'>
+	<form id='login' class="form-inline">
+			<legend style="float: left;">New Folder</legend>
+
+			<div class='form-group'>
+			    <!-- <label for='username'>UserName*:</label><br/> -->
+			    <input placeholder='Username' class='form-control' type='text' name='Folder Name' id='username' maxlength="50">
+			</div>
+      <button type="submit" class="btn btn-default btn-lg btn-block">Submit</button>
+	</form>
+
+</div>
+<div class='col-md-4'></div>
+<!--
+Form Code End (see html-form-guide.com for more info.)
+-->
+
+</body>
+</html>

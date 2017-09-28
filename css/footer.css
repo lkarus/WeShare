@@ -1,0 +1,45 @@
+#main_content{
+    margin-top:100px;
+}
+.container {
+    width: auto;
+    /*max-width: 680px;*/
+    padding: 0 15px;
+    }
+    
+html{
+    position: relative;
+    min-height: 100%;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    clear: both;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #d2d2d2;
+    }
+    .footer .col-md-4 {
+        text-align: center;
+    }
+
+    .footer p {
+        font-size: 120%;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    .footer a {
+        font-size: 90%;
+        text-decoration: none;
+        color: black;
+    }
+
+    .footer a:hover {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+        -webkit-transition: color 1s;
+        transition: color 1s;
+    }

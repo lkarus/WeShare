@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="../scripts/rmc3.min.js"></script>
+    <script src="https://cdn.webrtc-experiment.com:443/socket.io.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Youtube</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/footer.css">
+    <!-- custom layout for HTML5 audio/video elements -->
+    <script src="../scripts/getMediaElement.js"></script>
+    <style>
+        body {
+            font-size: 16px;
+        }
+        
+        #link-box {
+            margin-bottom: 80px;
+        }
+        #chat{
+			height: 500px;
+		}
+		#contentWrap{
+			display: none;
+		}
+		
+		#chatWrap{
+			float:left;
+			/*border: 1px #000 solid;*/
+		}
+    </style>
+  </head>
+  <body>
+      
+    <div class="cover">
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><h5>WeShare</h5></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+              <li><a data-fancybox-type="iframe" class="various" href="./external/register-assist/login.php">Login</a></li>
+              </li>
+              <li><li><a data-fancybox-type="iframe" class="register" href="./external/register-assist/register.php">Register</a></li>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" id="main_content">
+        <div class="row">
+            <div class="col-md-8">
+               <div id="player" class="center-block"></div>
+               
+               </br>
+               </br>
+               <div class="panel panel-default" id="link-box">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;Share this link with your friend!</div>
+                    <div class="panel-body"><a href="#" id="link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">List of participants</h3>
+                    </div>
+                    <div class="panel-body">
+                        Bob
+                    </div>
+                </div>
+                <!-- <div id="contentWrap">
+                    <div id="chatWrap">
+                        <div id="player"></div>
+                    </div>
+                    <div id="audios-container"></div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class = "col-md-4">
+                    <p>&copy;&nbsp;<a href="">Copyright</a>&emsp;|&emsp;<a href="">About us</a>&emsp;|&emsp;<a href="">Contact us</a></p>
+                </div>
+                <div class = "col-md-4"></div>
+                <div class = "col-md-4"><p>Designed by</p></div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+   <script>
+        // Get the GET variable from URL
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+            });
+            return vars;
+        }
+        
+        /* WebRTC connection establishment */
+        var connection = new RTCMultiConnection({
+            useDefaultDevices: true
+        });
+        connection.socketURL = 'https://wordmoment.com:9002';
+        
+        connection.socketMessageEvent = 'audio-conference-demo';
+
+        connection.session = {
+            audio: false,
+            video: false,
+            data: true
+        };
+
+        connection.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: false,
+            OfferToReceiveVideo: false
+        }; 
+        
+        connection.mediaConstraints.video = false;
+        connection.mediaConstraints.audio = {
+        mandatory: {
+                googEchoCancellation: true,
+                googAutoGainControl: true,
+                googNoiseSuppression: true,
+                googHighpassFilter: true,
+                googTypingNoiseDetection: true,
+                googAudioMirroring: true
+            },
+            optional: []
+        };
+        
+        connection.audiosContainer = document.getElementById('audios-container');
+        connection.onstream = function(event) {
+            var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
+            var mediaElement = getMediaElement(event.mediaElement, {
+                title: event.userid,
+                buttons: ['full-screen'],
+                width: width,
+                showOnMouseEnter: false
+            });
+
+            connection.audiosContainer.appendChild(mediaElement);
+
+            setTimeout(function() {
+                mediaElement.media.play();
+            }, 5000);
+            
+            mediaElement.id = event.streamid;
+            
+        };
+        
+        connection.onstreamended = function(event) {
+            var mediaElement = document.getElementById(event.streamid);
+            if(mediaElement) {
+                mediaElement.parentNode.removeChild(mediaElement);
+            }
+        };
+        
+        var YTVideoURL = getUrlVars()["yt"];
+        var videoID = YTVideoURL.split('v%3D')[1];
+        /*var previous;
+        var current;
+        var receiveSignal = false;
+        var desiredStatus;
+        var count = 1;*/
+        
+        connection.openOrJoin(videoID);
+        document.getElementById('link').innerHTML = window.location.href;
+
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+        function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoID,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+        });
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+            // event.target.playVideo();
+        }
+
+        // declaring necessary variables for synchronization
+        var userName = $("#username").text();
+        console.log(userName);
+        var blockPlaySignal = false;    // turned ON to block the next play signal to be sent
+        var blockPauseSignal = false;   // turned ON to block the next pause signal to be sent
+        var blockBufferSignal = false;   // turned ON to block the next buffering signal to be sent
+        var waitingNumber = 0;  // number of participants in the room excluding user
+        var remoteHolder = 'none';  // the one who initiate the play signal
+
+        function onPlayStatus() {
+            if (connection.getAllParticipants().length > 0) {   // you are not alone
+                if (!blockPlaySignal) {
+                    console.log("on playing");
+                    waitingNumber = connection.getAllParticipants().length;
+                    console.log("waiting number updated: " + waitingNumber);
+
+                    // blockPauseSignal is turned ON
+                    // pause the video to wait for synchronzation
+                    blockPauseSignal = true;
+                    console.log("blockPauseSignal changed to TRUE");
+                    player.pauseVideo();
+
+                    // update remoteHolder
+                    remoteHolder = userName;
+
+                    // send play signal
+                    connection.send({type:'initiator', message:'play', sender: userName, seekTime: player.getCurrentTime()});
+                    console.log('play sent');
+                }         
+                else {  // blockPlaySignal is ON
+                    console.log("Play signal blocked, blockPlaySignal to FALSE");
+                    blockPlaySignal = false;
+                }   
+            }
+            else {  // no other users
+                console.log(connection.getAllParticipants().length);
+                console.log("on playing");
+            }
+        }
+
+        function onPauseStatus() {
+            if (connection.getAllParticipants().length > 0) {   // you are not alone
+                if (!blockPauseSignal) {
+                    // send pause signal
+                    console.log("on pause");
+                    connection.send({type:'signal', message:'pause', sender:'none'});
+                    console.log("pause sent");
+                }
+                else {  // blockPauseSignal is ON
+                    console.log("pause signal blocked, blockPauseSignal to FALSE");
+                    blockPauseSignal = false;
+                }
+            }
+            else {  // no other users
+                console.log("on pause. no other users.");
+            }
+        }
+
+        function onBufferStatus() {
+            console.log('buffering at ' + player.getCurrentTime());
+            if (connection.getAllParticipants().length > 0) {   // you are not alone
+                if (!blockBufferSignal) {
+                    console.log("Buffering");
+                    connection.send({type:'signal', message:'pause', sender:'none'});
+                    console.log("sent buffer signal with current time.");
+                }
+                else {  // blockBufferSignal is ON
+                    console.log("buffering signal blocked, blockBufferSignal to FALSE");
+                    blockBufferSignal = false;
+                }
+            }
+            else {  
+                // no other users
+                console.log("buffering. no other users.");
+            }
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        function onPlayerStateChange(event) {
+            var playerStatus = event.data;
+            switch (playerStatus) {
+                case -1:    // unstarted
+                    console.log("player unstarted.");
+                    // block buffering signal sent at the beginning
+                    blockBufferSignal = true;
+                    break;
+                case 0:     // ended
+                    console.log("player ended.");
+                    break;
+                case 1:     // playing
+                    onPlayStatus();
+                    break;
+                case 2:     // paused
+                    onPauseStatus();
+                    break;
+                case 3:     // buffering
+                    onBufferStatus();
+                    break;
+                case 5:     // cued, ready to play 
+                    console.log("player cued.");
+                    break;
+                default:
+                    console.log("undefined player status: " + playerStatus);
+            }
+        }
+
+        // ==============================================
+        // Pause the program for ms milliseconds        =
+        // Called in playHandle.                        =
+        // ==============================================
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // ==========================================================
+        // Called when receive play signal from another user.       =
+        // Wait until the video have enough data to start playing.  =
+        // Play the video, send sync signal back to that user.      =
+        // Change handlingRequest back to FALSE.                    =
+        // ==========================================================
+
+        async function playHandle(time) {
+            console.log('play received');
+            blockPlaySignal = true;
+            console.log('blockPlaySignal to TRUE');
+            blockBufferSignal = true;
+            console.log('blockBufferSignal to TRUE');
+            player.seekTo(time)
+            player.playVideo();
+            var playerState = player.getPlayerState();
+            while (playerState != 1) {
+                console.log('current state is now : ' + playerState);
+                await sleep(500);
+                playerState = player.getPlayerState();
+            }
+            blockPauseSignal = true;
+            console.log('blockPauseSignal to TRUE');
+            player.pauseVideo();
+            connection.send({type:'signal', message:'playable', sender:userName});
+            console.log('playable sent');
+        }
+
+        // ==========================================================
+        // Called when receive playable signal from another user.   =
+        // ========================================================== 
+
+        function playableHandle() {
+            console.log(Date.now() + ": playable received");
+            waitingNumber = waitingNumber - 1;
+            if (waitingNumber == 0) {
+                connection.send({type:'signal', message:'sync', sender:userName});
+                console.log('sync sent')
+                blockPlaySignal = true;
+                console.log('blockPlaySignal to TRUE');
+                player.playVideo();
+                remoteHolder = 'none';
+            }
+            else {
+                console.log("not yet sync. waiting number is " + waitingNumber);
+            }
+            console.log('done handling sync');
+        }
+
+        function pauseHandle() {
+            console.log('pause received');
+            blockPauseSignal = true;
+            console.log('blockPauseSignal to TRUE');
+            player.pauseVideo();
+        }
+
+        function syncHandle() {
+            console.log('sync received');
+            blockPlaySignal = true;
+            console.log('blockPlaySignal to TRUE');
+            player.playVideo();
+            // mainVideo.controls = true;
+            remoteHolder = 'none';
+        }
+
+        function bufferHandle(time) {
+            console.log('buffer received');
+            blockBufferSignal = true;
+            console.log('blockBufferSignal to TRUE');
+            player.seekTo(time);
+        }
+
+        connection.onmessage = function(event) {
+            var sender = event.data.sender;
+            var type = event.data.type;
+            var message = event.data.message;
+            
+            console.log("message from " + sender + " remoteHolder: " + remoteHolder);
+
+            if (remoteHolder.localeCompare(userName) === 0) {
+                // you are the remoteHolder
+                console.log("i am the remote holder");
+                if (type.localeCompare("signal") === 0) {
+                    // signal message
+                    if (message.localeCompare("play") === 0) {  // receive play signal
+                        playHandle(event.data.seekTime);
+                    }
+                    else if (message.localeCompare("playable") === 0) { // receive playable signal
+                        playableHandle();
+                    }
+                    else if (message.localeCompare("pause") === 0) {    // receive pause signal
+                        pauseHandle();
+                    }
+                    else if (message.localeCompare("sync") === 0) {     // receive sync signal
+                        syncHandle();
+                    }
+                    else if (message.localeCompare("buffer") === 0) {
+                        bufferHandle(event.data.seekTime);
+                    }
+                    else {
+                        console.log('received unidentified signal');
+                    }
+                }
+                else if (type.localeCompare("initiator") === 0) {
+                    // initiator message
+                    console.log("im not supposed to receive an initiator");
+                }
+                else {
+                    console.log('not a signal');
+                }
+            }
+            else if (remoteHolder.localeCompare("none") === 0
+                || sender.localeCompare(remoteHolder) === 0) {
+                // no remoteHolder or the message is from the remoteHolder
+                console.log("Valid message from remote holder");
+                if (type.localeCompare("signal") === 0) {
+                    if (message.localeCompare("play") === 0) {  // receive play signal
+                        playHandle(event.data.seekTime);
+                    }
+                    else if (message.localeCompare("playable") === 0) { // receive playable signal
+                        playableHandle();
+                    }
+                    else if (message.localeCompare("pause") === 0) {    // receive pause signal
+                        pauseHandle();
+                    }
+                    else if (message.localeCompare("sync") === 0) {     // receive sync signal
+                        syncHandle();
+                    }
+                    else if (message.localeCompare("buffer") === 0) {
+                        bufferHandle(event.data.seekTime);
+                    }
+                    else {
+                        console.log('received unidentified signal');
+                    }
+                }
+                else if (type.localeCompare("initiator") === 0) {
+                    remoteHolder = sender;
+                    // mainVideo.controls = false; // disable control
+                    console.log("remoteHolder is now " + remoteHolder);
+                    if (message.localeCompare("play") === 0) {  // receive play signal
+                        playHandle(event.data.seekTime);
+                    }
+                    else {
+                        console.log('received unidentified signal');
+                    }
+                }
+                else {
+                    console.log('not a signal');
+                }
+            }
+            else {
+                console.log('message not from remote holder');
+            }
+        }
+        /*var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Create iframe player
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: videoID,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+            //event.target.playVideo();
+            $("#contentWrap").show();
+        }
+
+        // The API calls this function when the player's state changes.
+        function onPlayerStateChange(event) {
+            previous = current;
+            current = event.data;
+
+            if (receiveSignal) {
+                receiveSignal = false;
+                console.log(count + ': from receive signal: ' + previous + ' : ' + current);
+                count++;
+            }
+            else {
+                switch (current) {
+                    case 1: // PLAYING
+                        if (previous == 2) { // previous state was PAUSED
+                            console.log(count + ': emit seek signal.');
+                            count++;
+                            connection.send('play:' + player.getCurrentTime());
+                        }
+                        else if (previous == 3) {   // previous state was BUFFERING
+                            console.log(count + ': buffering done.');
+                            count++;
+                        }
+                        else {
+                            console.log(count + ': emit play signal.');
+                            count++;
+                            connection.send('play');
+                        }
+                        break;
+                    case 2: // PAUSED
+                        console.log(count + ': emit pause signal.');
+                        count++;
+                        connection.send('pause');
+                        break;
+                    case 3: // BUFFERING
+                        if (previous == -1) {   // previous state was UNSTARTED
+                            console.log(count + ': emit play signal from buffering.');
+                            count++;
+                            connection.send('play');
+                        }
+                        break;
+                    default:
+                        console.log(count + ': status: ' + previous + " : " + current);
+                        count++;
+                };
+            }
+            
+        }
+
+        function playVideo() {
+            if (player.getPlayerState() == 2 || player.getPlayerState() == 5) {
+                player.playVideo();
+            }
+            else {
+                console.log(count + ': #playVideo: cannot play video. Current state: ' + player.getPlayerState());
+                count++;
+            }
+        }
+
+        function pauseVideo() {
+            if (player.getPlayerState() == 1) {
+                player.pauseVideo();
+            }
+            else {
+                console.log(count + ': #pauseVideo: cannot pause video. Current state: ' + player.getPlayerState());
+                count++;
+            }
+        }
+        
+        connection.onmessage = function(event) {
+            var message = event.data.split(':');
+            receiveSignal = true;
+            if (message[0].localeCompare('play') === 0) {
+                if (message.length == 2) {
+                    console.log(count + ': receive seek signal.');
+                    count++;
+                    player.seekTo(message[1]);
+                }
+                else {
+                    console.log(count + ': receive play signal.');
+                    count++;
+                }
+                playVideo();
+            }
+            else if (message[0].localeCompare('pause') === 0) {
+                console.log(count + ': receive pause signal.');
+                count++;
+                pauseVideo();
+            }
+            else if (message[0].localeCompare('video') === 0) {
+                player.loadVideoById(message[1]);
+            }
+        };*/
+    </script>
+
+  </body>
+</html>
